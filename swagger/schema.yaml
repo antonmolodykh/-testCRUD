@@ -1,0 +1,121 @@
+swagger: "2.0"
+
+info:
+  title: CRUD
+  version: "1.0"
+
+schemes:
+  - http
+
+paths:
+  /client/:
+    get:
+      operationId: api.client.client.get
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Client
+          schema:
+            $ref: '#/definitions/ClientRecord'
+    post:
+      operationId: api.client.client.post
+      parameters:
+        - in: body
+          name: client
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        '201':
+          description: Created
+    put:
+      operationId: api.client.client.put
+      parameters:
+        - in: body
+          name: client
+          required: true
+          schema:
+            $ref: '#/definitions/ClientRecord'
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Record does not exist
+
+    delete:
+      operationId: api.client.client.delete
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Record does not exist
+
+  /byFilters/:
+    get:
+      operationId: api.client.by_filter
+      parameters:
+        - name: query
+          in: query
+          required: true
+          type: string
+        - name: page
+          in: query
+          required: false
+          type: integer
+        - name: count
+          in: query
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Rezult
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ClientRecord'
+
+
+
+
+definitions:
+  Client:
+    description: Client
+    type: object
+    required:
+      - name
+      - phone
+      - timezone
+    properties:
+      name:
+        type: string
+      phone:
+        type: string
+      timezone:
+        type: string
+
+  ClientRecord:
+    description: ClientRecord
+    type: object
+    required:
+      - id
+      - name
+      - phone
+      - timezone
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      timezone:
+        type: string
